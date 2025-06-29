@@ -17,7 +17,7 @@ const Cart = () => {
 
     const [couponInput, setCouponInput] = useState(coupon || "");
     const [couponMessage, setCouponMessage] = useState("");
-    const [couponStatus, setCouponStatus] = useState(null); 
+    const [couponStatus, setCouponStatus] = useState(null);
 
     const handleApplyCoupon = (e) => {
         console.log('Coupon Input >>> ', couponInput)
@@ -55,22 +55,22 @@ const Cart = () => {
                                     key={item.id}
                                     className="bg-white border border-gray-200 p-4 rounded"
                                 >
-                                    <div className="flex flex-col sm:flex-row items-center gap-4">
+                                    <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 items-center">
                                         {/* Product Image */}
                                         <img
                                             src={item.image}
                                             alt={item.title}
-                                            className="w-16 h-16 object-contain border border-gray-200 rounded"
+                                            className="w-16 h-16 object-contain border border-gray-200 rounded justify-self-center"
                                         />
+
                                         {/* Product Title and Price */}
-                                        <div className="flex-1">
+                                        <div>
                                             <h3 className="font-medium text-gray-900">{item.title}</h3>
-                                            <p className="text-gray-500 text-sm">
-                                                ${item.price.toFixed(2)} each
-                                            </p>
+                                            <p className="text-gray-500 text-sm">${item.price.toFixed(2)}</p>
                                         </div>
+
                                         {/* Quantity Field (Control quantity) */}
-                                        <div className="flex items-center gap-2">
+                                        <div className="flex items-center gap-2 justify-self-center">
                                             <button
                                                 onClick={() => {
                                                     if (item.qty > 1) {
@@ -91,10 +91,11 @@ const Cart = () => {
                                                 +
                                             </button>
                                         </div>
+
                                         {/* Total Price with discount */}
                                         <div className={`flex flex-col ${itemDiscount > 0 ? "justify-start" : "justify-center"} items-center min-h-[48px] min-w-[90px] text-center`}>
                                             {/* Total price after discount */}
-                                            <div className="font-bold text-gray-900 text-center">
+                                            <div className="font-bold text-gray-900">
                                                 ${(item.price * item.qty - itemDiscount).toFixed(2)}
                                             </div>
                                             {/* Discount display if applicable */}
@@ -104,15 +105,17 @@ const Cart = () => {
                                                 </div>
                                             )}
                                         </div>
+
                                         {/* Remove item from the cart/remove button */}
                                         <button
                                             onClick={() => removeFromCart(item.id)}
-                                            className="text-red-500 hover:text-red-700 text-sm"
+                                            className="text-red-500 hover:text-red-700 text-sm justify-self-center"
                                         >
                                             Remove
                                         </button>
                                     </div>
                                 </div>
+
                             );
                         })}
                     </div>
