@@ -1,23 +1,29 @@
 import { useEffect, useState } from "react";
 import { fetchProducts } from "../services/productService";
 import ProductGrid from "../components/ProductGrid";
+import { useCart } from "../contexts/CartContext";
 
-export default function Home({ onAddToCart }) {
+export default function Home() {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const { onAddToCart } = useCart();
 
     useEffect(() => {
-        const getProducts = async () => {
+        async function getProducts() {
+            setLoading(true);
+            setError(null);
             try {
                 const data = await fetchProducts();
-                setProducts(data);
+                setProducts(data || []);
             } catch (err) {
+                console.error("Error fetching products:", err); 
                 setError("Error loading products");
+                setProducts([]);
             } finally {
                 setLoading(false);
             }
-        };
+        }
 
         getProducts();
     }, []);
