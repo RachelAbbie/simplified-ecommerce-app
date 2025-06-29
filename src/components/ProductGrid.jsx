@@ -1,8 +1,6 @@
 import ProductCard from "./ProductCard";
 
 export default function ProductGrid({ products, onAdd }) {
-
-  console.log('PRODUCTS >>> ', products)
   const cards = [];
   for (let i = 0; i < products.length; i++) {
     cards.push(
