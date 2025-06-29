@@ -9,18 +9,18 @@ export default function Sidebar({ page, setPage }) {
     }
 
     return (
-        <aside className="w-48 bg-blue-500 text-white flex flex-col items-center py-8 min-h-screen">
-            <div className="text-2xl font-bold mb-8">Shop</div>
-            <nav className="flex flex-col gap-4 w-full">
+        <aside className="w-48 bg-blue-500 text-white p-6">
+            <h1 className="text-xl font-bold mb-8">Shop</h1>
+            <nav className="space-y-4">
                 <button
-                    className={`w-full p-2 text-lg rounded ${page === "home" ? "bg-white text-blue-500" : ""}`}
                     onClick={() => setPage("home")}
+                    className={`w-full text-left p-2 rounded ${page === "home" ? "bg-white text-blue-500" : "hover:bg-blue-600"}`}
                 >
                     Home
                 </button>
                 <button
-                    className={`w-full p-2 text-lg rounded flex justify-between items-center ${page === "cart" ? "bg-white text-blue-500" : ""}`}
                     onClick={() => setPage("cart")}
+                    className={`w-full text-left p-2 rounded flex justify-between items-center ${page === "cart" ? "bg-white text-blue-500" : "hover:bg-blue-600"}`}
                 >
                     Cart
                     {cartCount > 0 && (
@@ -32,4 +32,4 @@ export default function Sidebar({ page, setPage }) {
             </nav>
         </aside>
     );
-}
+} 
