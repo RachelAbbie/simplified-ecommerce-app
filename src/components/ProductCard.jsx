@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
+import { Link } from 'react-router-dom';
 
-export default function ProductCard({ product, onAdd, setPage }) {
+export default function ProductCard({ product, onAdd }) {
     const [quantity, setQuantity] = useState(1);
 
     const handleQuantityChange = (e) => {
@@ -51,9 +52,9 @@ export default function ProductCard({ product, onAdd, setPage }) {
                 <button onClick={handleAddToCart} className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">
                     Add to Cart
                 </button>
-                <button onClick={() => setPage("cart")} className="w-full bg-gray-100 text-blue-500 py-2 rounded hover:bg-gray-200 sm:hidden">
+                <Link to="/cart" className="w-full block bg-gray-100 text-blue-500 py-2 rounded hover:bg-gray-200 sm:hidden text-center">
                     View Cart
-                </button>
+                </Link>
             </div>
         </div>
     );

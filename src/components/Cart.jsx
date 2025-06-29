@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useCart } from "../contexts/CartContext";
+import { NavLink } from 'react-router-dom';
 
-const Cart = ({ setPage }) => {
+const Cart = () => {
     const {
         cart,
         removeFromCart,
@@ -23,9 +24,9 @@ const Cart = ({ setPage }) => {
 
     return (
         <div className="max-w-4xl mx-auto px-4">
-            <button onClick={() => setPage("home")} className="sm:hidden mb-4 text-blue-500 underline">
+            <NavLink to="/" className="sm:hidden mb-4 text-blue-500 underline">
                 Back to Home
-            </button>
+            </NavLink>
             <h1 className="text-2xl font-bold text-gray-900 mb-6">My Cart</h1>
 
             {cart.length === 0 ? (

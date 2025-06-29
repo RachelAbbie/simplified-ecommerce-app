@@ -1,6 +1,7 @@
 import { useCart } from "../contexts/CartContext";
+import { NavLink } from 'react-router-dom';
 
-export default function Sidebar({ page, setPage }) {
+export default function Sidebar() {
     const { cart } = useCart();
 
     let cartCount = 0;
@@ -12,23 +13,17 @@ export default function Sidebar({ page, setPage }) {
         <aside className="hidden sm:block w-48 bg-blue-500 text-white p-6">
             <h1 className="text-xl font-bold mb-8">Shop</h1>
             <nav className="space-y-4">
-                <button
-                    onClick={() => setPage("home")}
-                    className={`w-full text-left p-2 rounded ${page === "home" ? "bg-white text-blue-500" : "hover:bg-blue-600"}`}
-                >
+                <NavLink to="/" end className={({ isActive }) => `w-full block text-left p-2 rounded ${isActive ? "bg-white text-blue-500" : "hover:bg-blue-600"}`}>
                     Home
-                </button>
-                <button
-                    onClick={() => setPage("cart")}
-                    className={`w-full text-left p-2 rounded flex justify-between items-center ${page === "cart" ? "bg-white text-blue-500" : "hover:bg-blue-600"}`}
-                >
+                </NavLink>
+                <NavLink to="/cart" className={({ isActive }) => `w-full block text-left p-2 rounded flex justify-between items-center ${isActive ? "bg-white text-blue-500" : "hover:bg-blue-600"}`}>
                     Cart
                     {cartCount > 0 && (
                         <span className="bg-red-500 text-white text-xs px-2 py-1 rounded">
                             {cartCount}
                         </span>
                     )}
-                </button>
+                </NavLink>
             </nav>
         </aside>
     );
