@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useCallback, useEffect } from "react";
 import { getItemDiscount } from "../utils/couponUtils";
+import { addToCart, updateCartQuantity, removeItemFromCart, calculateSubtotal, calculateTotalDiscount } from "../utils/cartUtils";
 
 const CartContext = createContext();
 
@@ -8,7 +9,7 @@ export function useCart() {
 }
 
 export function CartProvider({ children }) {
-    
+
     const [cart, setCart] = useState(() => {
         const saved = localStorage.getItem("cart");
         return saved ? JSON.parse(saved) : [];
@@ -26,44 +27,26 @@ export function CartProvider({ children }) {
         localStorage.setItem("coupon", coupon);
     }, [coupon]);
 
+    // add to cart
     const onAddToCart = useCallback((product, qty = 1) => {
-        setCart(prev => {
-            const exists = prev.find(item => item.id === product.id);
-            if (exists) {
-                return prev.map(item =>
-                    item.id === product.id
-                        ? { ...item, qty: item.qty + qty }
-                        : item
-                );
-            } else {
-                return [...prev, { ...product, qty }];
-            }
-        });
+        setCart(prev => addToCart(prev, product, qty));
     }, []);
 
+    // update quantity
     const updateQuantity = useCallback((productId, qty) => {
-        setCart(prev =>
-            prev.map(item =>
-                item.id === productId ? { ...item, qty } : item
-            )
-        );
+        setCart(prev => updateCartQuantity(prev, productId, qty));
     }, []);
 
+    // remove from cart
     const removeFromCart = useCallback((productId) => {
-        setCart(prev => prev.filter(item => item.id !== productId));
+       setCart(prev => removeItemFromCart(prev, productId));
     }, []);
 
     // Calculate subtotal 
-    let subtotal = 0;
-    for (let i = 0; i < cart.length; i++) {
-        subtotal += cart[i].price * cart[i].qty;
-    }
+    const subtotal = calculateSubtotal(cart);
 
     // Calculate total discount using getItemDiscount 
-    let totalDiscount = 0;
-    for (let i = 0; i < cart.length; i++) {
-        totalDiscount += getItemDiscount(cart[i], coupon);
-    }
+    const totalDiscount = calculateTotalDiscount(cart, coupon, getItemDiscount);
 
     let grandTotal = subtotal - totalDiscount;
 
