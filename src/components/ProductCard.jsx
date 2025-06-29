@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 
-export default function ProductCard({ product, onAdd }) {
+export default function ProductCard({ product, onAdd, setPage }) {
     const [quantity, setQuantity] = useState(1);
 
     const handleQuantityChange = (e) => {
@@ -19,7 +19,7 @@ export default function ProductCard({ product, onAdd }) {
 
     return (
         <div className="bg-white border border-gray-200 rounded flex flex-col h-full min-h-[370px] items-center">
-            <div className="flex-1 flex flex-col justify-between">
+            <div className="flex-1 flex flex-col justify-between w-full">
                 <div className="p-2 flex flex-col items-center">
                     <div className="flex justify-center mb-4 mt-4">
                         <img
@@ -28,7 +28,7 @@ export default function ProductCard({ product, onAdd }) {
                             className="h-32 object-contain"
                         />
                     </div>
-                    <h3 className="font-medium text-gray-900 mb-2 line-clamp-2 min-h-[48px]">
+                    <h3 className="font-medium text-gray-900 mb-2 line-clamp-2 min-h-[48px] text-center px-2">
                         {product.title}
                     </h3>
                     <div className="text-lg font-bold text-gray-900 mb-4">
@@ -46,12 +46,15 @@ export default function ProductCard({ product, onAdd }) {
                     </div>
                 </div>
             </div>
-            <button
-                onClick={handleAddToCart}
-                className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 mt-auto"
-            >
-                Add to Cart
-            </button>
+
+            <div className="w-full p-2 space-y-2">
+                <button onClick={handleAddToCart} className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">
+                    Add to Cart
+                </button>
+                <button onClick={() => setPage("cart")} className="w-full bg-gray-100 text-blue-500 py-2 rounded hover:bg-gray-200 sm:hidden">
+                    View Cart
+                </button>
+            </div>
         </div>
     );
 }

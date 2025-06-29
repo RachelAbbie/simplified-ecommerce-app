@@ -13,8 +13,8 @@ export default function App() {
       <div className="flex min-h-screen bg-gray-100">
         <Sidebar page={page} setPage={setPage} />
         <main className="flex-1 p-4">
-          {page === "home" && <Home />}
-          {page === "cart" && <Cart />}
+          {page === "home" && <Home setPage={setPage } />}
+          {page === "cart" && <Cart setPage={setPage }/>}
         </main>
       </div>
     </CartProvider>

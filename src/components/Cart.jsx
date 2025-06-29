@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useCart } from "../contexts/CartContext";
 
-const Cart = () => {
+const Cart = ({ setPage }) => {
     const {
         cart,
         removeFromCart,
@@ -23,6 +23,9 @@ const Cart = () => {
 
     return (
         <div className="max-w-4xl mx-auto px-4">
+            <button onClick={() => setPage("home")} className="sm:hidden mb-4 text-blue-500 underline">
+                Back to Home
+            </button>
             <h1 className="text-2xl font-bold text-gray-900 mb-6">My Cart</h1>
 
             {cart.length === 0 ? (
@@ -40,7 +43,7 @@ const Cart = () => {
                                     key={item.id}
                                     className="bg-white border border-gray-200 p-4 rounded"
                                 >
-                                    <div className="flex items-center gap-4">
+                                    <div className="flex flex-col sm:flex-row items-center gap-4">
                                         {/* Product Image */}
                                         <img
                                             src={item.image}
@@ -77,9 +80,7 @@ const Cart = () => {
                                             </button>
                                         </div>
                                         {/* Total Price with discount */}
-                                        <div
-                                            className={`flex flex-col ${itemDiscount > 0 ? "justify-start" : "justify-center"} items-center min-h-[48px] min-w-[90px] text-center`}
-                                        >
+                                        <div className={`flex flex-col ${itemDiscount > 0 ? "justify-start" : "justify-center"} items-center min-h-[48px] min-w-[90px] text-center`}>
                                             {/* Total price after discount */}
                                             <div className="font-bold text-gray-900 text-center">
                                                 ${(item.price * item.qty - itemDiscount).toFixed(2)}

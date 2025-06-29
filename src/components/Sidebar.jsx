@@ -9,7 +9,7 @@ export default function Sidebar({ page, setPage }) {
     }
 
     return (
-        <aside className="w-48 bg-blue-500 text-white p-6">
+        <aside className="hidden sm:block w-48 bg-blue-500 text-white p-6">
             <h1 className="text-xl font-bold mb-8">Shop</h1>
             <nav className="space-y-4">
                 <button

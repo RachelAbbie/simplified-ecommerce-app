@@ -1,6 +1,6 @@
 import ProductCard from "./ProductCard";
 
-export default function ProductGrid({ products, onAdd }) {
+export default function ProductGrid({ products, onAdd, setPage}) {
   const cards = [];
   for (let i = 0; i < products.length; i++) {
     cards.push(
@@ -8,6 +8,7 @@ export default function ProductGrid({ products, onAdd }) {
         key={products[i].id}
         product={products[i]}
         onAdd={onAdd}
+        setPage={setPage}
       />
     );
   }

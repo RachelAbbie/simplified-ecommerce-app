@@ -3,7 +3,7 @@ import { fetchProducts } from "../services/productService";
 import ProductGrid from "../components/ProductGrid";
 import { useCart } from "../contexts/CartContext";
 
-export default function Home() {
+export default function Home({ setPage }) {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -34,7 +34,7 @@ export default function Home() {
     return (
         <div>
             <h1 className="text-2xl font-bold mb-4 text-gray-900">Products</h1>
-            <ProductGrid products={products} onAdd={onAddToCart} />
+            <ProductGrid products={products} onAdd={onAddToCart} setPage={setPage} />
         </div>
     );
 }
