@@ -16,10 +16,21 @@ const Cart = () => {
     } = useCart();
 
     const [couponInput, setCouponInput] = useState(coupon || "");
+    const [couponMessage, setCouponMessage] = useState("");
+    const [couponStatus, setCouponStatus] = useState(null); 
 
     const handleApplyCoupon = (e) => {
+        console.log('Coupon Input >>> ', couponInput)
         e.preventDefault();
         setCoupon(couponInput.trim());
+        // Validate coupon
+        if (couponInput.trim().toUpperCase() === "SAVE10") {
+            setCouponMessage("Coupon applied");
+            setCouponStatus("valid");
+        } else {
+            setCouponMessage("Invalid coupon code");
+            setCouponStatus("invalid");
+        }
     };
 
     return (
@@ -114,7 +125,11 @@ const Cart = () => {
                                 type="text"
                                 placeholder="Enter coupon code"
                                 value={couponInput}
-                                onChange={(e) => setCouponInput(e.target.value)}
+                                onChange={(e) => {
+                                    setCouponInput(e.target.value);
+                                    setCouponMessage("");
+                                    setCouponStatus(null);
+                                }}
                                 className="flex-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
                             />
                             <button
@@ -124,6 +139,8 @@ const Cart = () => {
                                 Apply
                             </button>
                         </form>
+                        {couponStatus === "valid" && (<div className="mt-2 text-green-600 text-sm">{couponMessage}</div>)}
+                        {couponStatus === "invalid" && (<div className="mt-2 text-red-600 text-sm">{couponMessage}</div>)}
                     </div>
 
                     {/* Order Summary */}
