@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useCallback } from "react";
+import { createContext, useContext, useState, useCallback, useEffect } from "react";
 import { getItemDiscount } from "../utils/couponUtils";
 
 const CartContext = createContext();
@@ -8,8 +8,23 @@ export function useCart() {
 }
 
 export function CartProvider({ children }) {
-    const [cart, setCart] = useState([]);
-    const [coupon, setCoupon] = useState("");
+    
+    const [cart, setCart] = useState(() => {
+        const saved = localStorage.getItem("cart");
+        return saved ? JSON.parse(saved) : [];
+    });
+    const [coupon, setCoupon] = useState(() => {
+        const saved = localStorage.getItem("coupon");
+        return saved ? saved : "";
+    });
+
+    useEffect(() => {
+        localStorage.setItem("cart", JSON.stringify(cart));
+    }, [cart]);
+
+    useEffect(() => {
+        localStorage.setItem("coupon", coupon);
+    }, [coupon]);
 
     const onAddToCart = useCallback((product, qty = 1) => {
         setCart(prev => {
