@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useCallback } from "react";
+import { getItemDiscount } from "../utils/couponUtils";
 
 const CartContext = createContext();
 
@@ -8,6 +9,7 @@ export function useCart() {
 
 export function CartProvider({ children }) {
     const [cart, setCart] = useState([]);
+    const [coupon, setCoupon] = useState("");
 
     const onAddToCart = useCallback((product, qty = 1) => {
         setCart(prev => {
@@ -36,12 +38,18 @@ export function CartProvider({ children }) {
         setCart(prev => prev.filter(item => item.id !== productId));
     }, []);
 
+    // Calculate subtotal 
     let subtotal = 0;
     for (let i = 0; i < cart.length; i++) {
-        subtotal = subtotal + (cart[i].price * cart[i].qty);
+        subtotal += cart[i].price * cart[i].qty;
     }
 
-    let totalDiscount = 0; // For future discount logic
+    // Calculate total discount using getItemDiscount 
+    let totalDiscount = 0;
+    for (let i = 0; i < cart.length; i++) {
+        totalDiscount += getItemDiscount(cart[i], coupon);
+    }
+
     let grandTotal = subtotal - totalDiscount;
 
     const value = {
@@ -52,6 +60,9 @@ export function CartProvider({ children }) {
         subtotal,
         totalDiscount,
         grandTotal,
+        coupon,
+        setCoupon,
+        getItemDiscount
     };
 
     return (
